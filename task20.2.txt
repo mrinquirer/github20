@@ -1,0 +1,51 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+
+# Replace with the path to your WebDriver executable
+driver_path = '/path/to/your/webdriver'
+
+# Initialize the WebDriver
+driver = webdriver.Chrome(executable_path=driver_path)
+
+# Launch the website
+driver.get("https://www.guvi.in/")
+
+# Maximize the browser window
+driver.maximize_window()
+
+# Locate and click the Signup button
+signup_button = driver.find_element(By.XPATH, "//a[contains(text(), 'Signup')]")
+signup_button.click()
+
+# Fill in the signup form with required details
+driver.find_element(By.NAME, 'name').send_keys('Dummy Name')
+driver.find_element(By.NAME, 'email').send_keys('dummyemail@example.com')
+driver.find_element(By.NAME, 'password').send_keys('DummyPassword123')
+driver.find_element(By.NAME, 'password_confirmation').send_keys('DummyPassword123')
+
+# Click the "Signup" button to submit the form
+driver.find_element(By.XPATH, "//button[contains(text(), 'Signup')]").click()
+
+# Wait for the page to load and verify registration (adjust the time as needed)
+time.sleep(5)
+assert "expected title or confirmation message" in driver.title
+
+# Locate and click the Login button
+login_button = driver.find_element(By.XPATH, "//a[contains(text(), 'Login')]")
+login_button.click()
+
+# Fill in the login form with the email and password used during registration
+driver.find_element(By.NAME, 'email').send_keys('dummyemail@example.com')
+driver.find_element(By.NAME, 'password').send_keys('DummyPassword123')
+
+# Click the "Login" button to submit the form
+driver.find_element(By.XPATH, "//button[contains(text(), 'Login')]").click()
+
+# Wait for the page to load and verify login (adjust the time as needed)
+time.sleep(5)
+assert "expected title or confirmation message" in driver.title
+
+# Close the browser
+driver.quit()
